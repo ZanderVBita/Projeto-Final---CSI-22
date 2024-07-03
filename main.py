@@ -5,8 +5,12 @@ from ComputerCar import ComputerCar
 from utils import *
 from Menu import Menu
 
+
+
 def main():
     pygame.init()
+    pygame.mixer_music.load('Projeto-Final---CSI-22/Mac DeMarco - Chamber Of Reflection (8-Bit).mp3')
+    pygame.mixer.music.play(-1)
     run_game()
 
 def run_game():
