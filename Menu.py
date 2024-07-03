@@ -31,7 +31,7 @@ class Menu:
                     exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_c:
-                        waiting = False  # Continue the game
+                        waiting = False 
                     elif event.key == pygame.K_q:
                         pygame.quit()
                         exit()

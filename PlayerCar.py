@@ -2,7 +2,7 @@ from AbstractCar import AbstractCar
 import pygame
 from utils import scale_image
 
-RED_CAR = scale_image(pygame.image.load("Projeto-Final---CSI-22/imgs/red-car.png"), 0.55)
+RED_CAR = scale_image(pygame.image.load("imgs/red-car.png"), 0.55)
 
 class PlayerCar(AbstractCar):
     IMG = RED_CAR
