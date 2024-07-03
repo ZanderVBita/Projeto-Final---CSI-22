@@ -7,7 +7,7 @@ class Menu:
         self.font = font
 
     def display_message(self, message):
-        self.win.fill((0, 0, 0))  # Clear the screen with black
+        self.win.fill((0, 0, 0))  
         blit_text_center(self.win, self.font, message)
         pygame.display.update()
 

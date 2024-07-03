@@ -7,20 +7,22 @@ from Menu import Menu
 
 def main():
     pygame.init()
+    pygame.mixer.init()
     pygame.mixer_music.load('Projeto-Final---CSI-22/Mac DeMarco - Chamber Of Reflection (8-Bit).mp3')
     pygame.mixer.music.play(-1)
-    run_game()
+    collision_sound = pygame.mixer.Sound("Projeto-Final---CSI-22/evil-laugh-89423.mp3") 
+    run_game(collision_sound)
 
-def run_game():
+def run_game(collision_sound):
     run = True
     clock = pygame.time.Clock()
     images = load_images()
     player_car = PlayerCar(4, 4)
-    computer_car = ComputerCar(0.7, 4, PATH)
+    computer_car = ComputerCar(0.8, 4, PATH)
     game_info = GameInfo()
     menu = Menu(WIN, MAIN_FONT)
 
-    
+    # Tela inicial
     menu.display_message("Press any key to start the game!")
     menu.wait_for_keypress()
     game_info.start_level()
@@ -28,7 +30,7 @@ def run_game():
     while run:
         clock.tick(FPS)
         handle_events(game_info, menu)
-        update_game_state(player_car, computer_car, game_info)
+        update_game_state(player_car, computer_car, game_info, collision_sound)
         draw(WIN, images, player_car, computer_car, game_info)
 
         if game_info.game_finished():
@@ -53,10 +55,10 @@ def handle_events(game_info, menu):
             if event.key == pygame.K_ESCAPE:
                 menu.show_pause_menu()
 
-def update_game_state(player_car, computer_car, game_info):
+def update_game_state(player_car, computer_car, game_info, collision_sound):
     move_player(player_car)
     computer_car.move()
-    handle_collision(player_car, computer_car, game_info)
+    handle_collision(player_car, computer_car, game_info, collision_sound)
 
 def handle_game_finished(game_info, player_car, computer_car, menu):
     menu.display_message("You won the game!")

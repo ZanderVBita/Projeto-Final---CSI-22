@@ -75,11 +75,13 @@ def move_player(player_car):
     if not moved:
         player_car.reduce_speed()
 
-def handle_collision(player_car, computer_car, game_info):
+def handle_collision(player_car, computer_car, game_info, collision_sound):
     if player_car.collide(TRACK_BORDER_MASK) is not None:
+        collision_sound.play()
         player_car.reset()
 
     if computer_car.collide(FINISH_MASK, *FINISH_POSITION) is not None:
+        collision_sound.play()
         blit_text_center(WIN, MAIN_FONT, "You lost!")
         pygame.display.update()
         pygame.time.wait(5000)
@@ -89,6 +91,7 @@ def handle_collision(player_car, computer_car, game_info):
 
     if player_car.collide(FINISH_MASK, *FINISH_POSITION) is not None:
         if player_car.collide(FINISH_MASK, *FINISH_POSITION)[1] == 0:
+            collision_sound.play()
             player_car.reset()
         else:
             game_info.next_level()
