@@ -6,11 +6,11 @@ from utils import *
 from Menu import Menu
 
 
-
 def main():
     pygame.init()
     pygame.mixer_music.load('Projeto-Final---CSI-22/Mac DeMarco - Chamber Of Reflection (8-Bit).mp3')
     pygame.mixer.music.play(-1)
+    
     run_game()
 
 def run_game():
@@ -55,6 +55,7 @@ def handle_events(game_info, menu):
                 game_info.start_level()
 
 def update_game_state(player_car, computer_car, game_info):
+    
     move_player(player_car)
     computer_car.move()
     handle_collision(player_car, computer_car, game_info)
