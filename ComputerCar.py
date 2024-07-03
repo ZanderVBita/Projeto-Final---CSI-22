@@ -3,7 +3,6 @@ import math
 from utils import scale_image
 from AbstractCar import AbstractCar
 
-
 GREEN_CAR = scale_image(pygame.image.load("Projeto-Final---CSI-22/imgs/green-car.png"), 0.55)
 
 class ComputerCar(AbstractCar):
@@ -48,8 +47,7 @@ class ComputerCar(AbstractCar):
 
     def update_path_point(self):
         target = self.path[self.current_point]
-        rect = pygame.Rect(
-            self.x, self.y, self.img.get_width(), self.img.get_height())
+        rect = pygame.Rect(self.x, self.y, self.img.get_width(), self.img.get_height())
         if rect.collidepoint(*target):
             self.current_point += 1
 

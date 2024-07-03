@@ -3,49 +3,64 @@ from GameInfo import GameInfo
 from PlayerCar import PlayerCar
 from ComputerCar import ComputerCar
 from utils import *
+from Menu import Menu
 
+def main():
+    pygame.init()
+    run_game()
 
-run = True
-clock = pygame.time.Clock()
-images = [(GRASS, (0, 0)), (TRACK, (0, 0)),
-          (FINISH, FINISH_POSITION), (TRACK_BORDER, (0, 0))]
-player_car = PlayerCar(4, 4)
-computer_car = ComputerCar(2, 4, PATH)
-game_info = GameInfo()
+def run_game():
+    run = True
+    clock = pygame.time.Clock()
+    images = load_images()
+    player_car = PlayerCar(4, 4)
+    computer_car = ComputerCar(2, 4, PATH)
+    game_info = GameInfo()
+    menu = Menu(WIN, MAIN_FONT)
 
-while run:
-    clock.tick(FPS)
+    while run:
+        clock.tick(FPS)
+        handle_events(game_info, menu)
+        update_game_state(player_car, computer_car, game_info)
+        draw(WIN, images, player_car, computer_car, game_info)
 
-    draw(WIN, images, player_car, computer_car, game_info)
+        if game_info.game_finished():
+            handle_game_finished(game_info, player_car, computer_car, menu)
 
-    while not game_info.started:
-        blit_text_center(
-            WIN, MAIN_FONT, f"Press any key to start level {game_info.level}!")
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                break
+    pygame.quit()
 
-            if event.type == pygame.KEYDOWN:
-                game_info.start_level()
+def load_images():
+    return [
+        (GRASS, (0, 0)),
+        (TRACK, (0, 0)),
+        (FINISH, FINISH_POSITION),
+        (TRACK_BORDER, (0, 0))
+    ]
 
+def handle_events(game_info, menu):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
-            break
+            pygame.quit()
+            exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                menu.show_pause_menu()
+            if not game_info.started:
+                menu.display_message(f"Press any key to start level {game_info.level}!")
+                menu.wait_for_keypress()
+                game_info.start_level()
 
+def update_game_state(player_car, computer_car, game_info):
     move_player(player_car)
     computer_car.move()
-
     handle_collision(player_car, computer_car, game_info)
 
-    if game_info.game_finished():
-        blit_text_center(WIN, MAIN_FONT, "You won the game!")
-        pygame.time.wait(5000)
-        game_info.reset()
-        player_car.reset()
-        computer_car.reset()
+def handle_game_finished(game_info, player_car, computer_car, menu):
+    menu.display_message("You won the game!")
+    pygame.time.wait(5000)
+    game_info.reset()
+    player_car.reset()
+    computer_car.reset()
 
-
-pygame.quit()
+if __name__ == "__main__":
+    main()
