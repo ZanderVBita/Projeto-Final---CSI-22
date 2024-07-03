@@ -5,12 +5,10 @@ from ComputerCar import ComputerCar
 from utils import *
 from Menu import Menu
 
-
 def main():
     pygame.init()
     pygame.mixer_music.load('Projeto-Final---CSI-22/Mac DeMarco - Chamber Of Reflection (8-Bit).mp3')
     pygame.mixer.music.play(-1)
-    
     run_game()
 
 def run_game():
@@ -18,9 +16,14 @@ def run_game():
     clock = pygame.time.Clock()
     images = load_images()
     player_car = PlayerCar(4, 4)
-    computer_car = ComputerCar(2, 4, PATH)
+    computer_car = ComputerCar(0.7, 4, PATH)
     game_info = GameInfo()
     menu = Menu(WIN, MAIN_FONT)
+
+    
+    menu.display_message("Press any key to start the game!")
+    menu.wait_for_keypress()
+    game_info.start_level()
 
     while run:
         clock.tick(FPS)
@@ -49,13 +52,8 @@ def handle_events(game_info, menu):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 menu.show_pause_menu()
-            if not game_info.started:
-                menu.display_message(f"Press any key to start level {game_info.level}!")
-                menu.wait_for_keypress()
-                game_info.start_level()
 
 def update_game_state(player_car, computer_car, game_info):
-    
     move_player(player_car)
     computer_car.move()
     handle_collision(player_car, computer_car, game_info)

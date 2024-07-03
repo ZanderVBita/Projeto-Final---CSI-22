@@ -7,6 +7,7 @@ class Menu:
         self.font = font
 
     def display_message(self, message):
+        self.win.fill((0, 0, 0))  # Clear the screen with black
         blit_text_center(self.win, self.font, message)
         pygame.display.update()
 
@@ -21,7 +22,6 @@ class Menu:
                     waiting = False
 
     def show_pause_menu(self):
-        self.win.fill((0, 0, 0)) 
         self.display_message("Paused. Press C to continue or Q to quit.")
         waiting = True
         while waiting:
@@ -31,7 +31,7 @@ class Menu:
                     exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_c:
-                        waiting = False
+                        waiting = False  # Continue the game
                     elif event.key == pygame.K_q:
                         pygame.quit()
                         exit()
