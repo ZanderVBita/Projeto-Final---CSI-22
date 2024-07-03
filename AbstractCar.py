@@ -28,6 +28,10 @@ class AbstractCar:
     def move_backward(self):
         self.vel = max(self.vel - self.acceleration, -self.max_vel/2)
         self.move()
+        
+    def turbo(self):
+        self.vel = 2*self.vel
+        self.move()
 
     def move(self):
         radians = math.radians(self.angle)

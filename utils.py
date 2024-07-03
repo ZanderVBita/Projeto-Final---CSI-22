@@ -1,6 +1,7 @@
 import pygame
 pygame.font.init()
 
+
 def scale_image(img, factor):
     size = round(img.get_width() * factor), round(img.get_height() * factor)
     return pygame.transform.scale(img, size)
@@ -73,7 +74,9 @@ def move_player(player_car):
     if keys[pygame.K_s]:
         moved = True
         player_car.move_backward()
-
+    if keys[pygame.K_SPACE]:
+        moved = True
+        player_car.turbo()
     if not moved:
         player_car.reduce_speed()
 
@@ -94,6 +97,7 @@ def handle_collision(player_car, computer_car, game_info):
 
     player_finish_poi_collide = player_car.collide(
         FINISH_MASK, *FINISH_POSITION)
+    
     if player_finish_poi_collide != None:
         if player_finish_poi_collide[1] == 0:
             player_car.bounce()
